@@ -1,12 +1,12 @@
-import sys
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
 
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.ensemble import ExtraTreesClassifier 
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
-
 from utilities import visualize_classifier
 
 # Load input data

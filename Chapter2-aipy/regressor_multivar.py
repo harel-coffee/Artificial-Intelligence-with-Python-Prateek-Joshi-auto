@@ -1,10 +1,12 @@
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
+
 import numpy as np
 from sklearn import linear_model
 import sklearn.metrics as sm
 from sklearn.preprocessing import PolynomialFeatures
 
 # Input file containing data
-input_file = 'data_multivar_regr.txt'
+input_file = open("/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter2-aipy/data_multivar_regr.txt")
 
 # Load the data from the input file
 data = np.loadtxt(input_file, delimiter=',')

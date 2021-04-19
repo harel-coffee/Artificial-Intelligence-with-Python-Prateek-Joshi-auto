@@ -1,3 +1,5 @@
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
+
 import pickle
 
 import numpy as np
@@ -6,7 +8,7 @@ import sklearn.metrics as sm
 import matplotlib.pyplot as plt
 
 # Input file containing data
-input_file = 'data_singlevar_regr.txt' 
+input_file = open("/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter2-aipy/data_singlevar_regr.txt")
 
 # Read data
 data = np.loadtxt(input_file, delimiter=',')

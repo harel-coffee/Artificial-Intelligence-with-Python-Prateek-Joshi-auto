@@ -1,3 +1,5 @@
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
+
 import argparse 
 
 import numpy as np
@@ -24,7 +26,7 @@ if __name__=='__main__':
     classifier_type = args.classifier_type
 
     # Load input data
-    input_file = '/home/bagusjava/Documents/0-Learn-More/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/data_random_forests.txt'
+    input_file = '/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/data_random_forests.txt'
     data = np.loadtxt(input_file, delimiter=',')
     X, y = data[:, :-1], data[:, -1]
 

@@ -1,12 +1,17 @@
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.svm import LinearSVC
 from sklearn.multiclass import OneVsOneClassifier
-from sklearn import cross_validation
+#from sklearn import cross_validation
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 
 # Input file containing data
-input_file = 'income_data.txt'
+input_file = "/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter2-aipy/income_data.txt"
 
 # Read the data
 X = []
@@ -37,10 +42,10 @@ with open(input_file, 'r') as f:
 X = np.array(X)
 
 # Convert string data to numerical data
-label_encoder = [] 
+label_encoder = []
 X_encoded = np.empty(X.shape)
-for i,item in enumerate(X[0]):
-    if item.isdigit(): 
+for i, item in enumerate(X[0]):
+    if item.isdigit():
         X_encoded[:, i] = X[:, i]
     else:
         label_encoder.append(preprocessing.LabelEncoder())
@@ -56,17 +61,18 @@ classifier = OneVsOneClassifier(LinearSVC(random_state=0))
 classifier.fit(X, y)
 
 # Cross validation
-X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2, random_state=5)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=5)
 classifier = OneVsOneClassifier(LinearSVC(random_state=0))
 classifier.fit(X_train, y_train)
 y_test_pred = classifier.predict(X_test)
 
 # Compute the F1 score of the SVM classifier
-f1 = cross_validation.cross_val_score(classifier, X, y, scoring='f1_weighted', cv=3)
+f1 = cross_val_score(classifier, X, y, scoring='f1_weighted', cv=3)
 print("F1 score: " + str(round(100*f1.mean(), 2)) + "%")
 
 # Predict output for a test datapoint
-input_data = ['37', 'Private', '215646', 'HS-grad', '9', 'Never-married', 'Handlers-cleaners', 'Not-in-family', 'White', 'Male', '0', '0', '40', 'United-States']
+input_data = ['37', 'Private', '215646', 'HS-grad', '9', 'Never-married','Handlers-cleaners', 'Not-in-family', 'White', 'Male', '0', '0', '40', 'United-States']
 
 # Encode test datapoint
 input_data_encoded = [-1] * len(input_data)
@@ -75,12 +81,12 @@ for i, item in enumerate(input_data):
     if item.isdigit():
         input_data_encoded[i] = int(input_data[i])
     else:
-        input_data_encoded[i] = int(label_encoder[count].transform(input_data[i]))
-        count += 1 
+        input_data_encoded[i] = int(
+            label_encoder[count].transform([input_data[i]]))
+        count += 1
 
-input_data_encoded = np.array(input_data_encoded)
+input_data_encoded = np.array(input_data_encoded).reshape(1, -1)
 
 # Run classifier on encoded datapoint and print output
 predicted_class = classifier.predict(input_data_encoded)
 print(label_encoder[-1].inverse_transform(predicted_class)[0])
-

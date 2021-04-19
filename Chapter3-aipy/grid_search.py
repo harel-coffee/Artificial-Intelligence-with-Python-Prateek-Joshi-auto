@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report
 from utilities import visualize_classifier
 
 # Load input data
-input_file = '/home/bagusjava/Documents/0-Learn-More/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/data_random_forests.txt'
+input_file = '/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/data_random_forests.txt'
 data = np.loadtxt(input_file, delimiter=',')
 X, y = data[:, :-1], data[:, -1]
 

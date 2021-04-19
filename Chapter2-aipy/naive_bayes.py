@@ -1,18 +1,22 @@
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
+
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.naive_bayes import GaussianNB 
-from sklearn import cross_validation
+from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 
 from utilities import visualize_classifier
 
 # Input file containing data
-input_file = 'data_multivar_nb.txt'
+input_file = open("/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter2-aipy/data_multivar_nb.txt")
 
 # Load data from input file
 data = np.loadtxt(input_file, delimiter=',')
-X, y = data[:, :-1], data[:, -1] 
+X, y = data[:, :-1], data[:, -1]
 
-# Create Naive Bayes classifier 
+# Create Naive Bayes classifier
 classifier = GaussianNB()
 
 # Train the classifier
@@ -29,10 +33,11 @@ print("Accuracy of Naive Bayes classifier =", round(accuracy, 2), "%")
 visualize_classifier(classifier, X, y)
 
 ###############################################
-# Cross validation 
+# Cross validation
 
-# Split data into training and test data 
-X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2, random_state=3)
+# Split data into training and test data
+X_train, X_test, y_train, y_test = cross_validation.train_test_split(
+    X, y, test_size=0.2, random_state=3)
 classifier_new = GaussianNB()
 classifier_new.fit(X_train, y_train)
 y_test_pred = classifier_new.predict(X_test)
@@ -48,19 +53,18 @@ visualize_classifier(classifier_new, X_test, y_test)
 # Scoring functions
 
 num_folds = 3
-accuracy_values = cross_validation.cross_val_score(classifier, 
-        X, y, scoring='accuracy', cv=num_folds)
+accuracy_values = cross_validation.cross_val_score(classifier,
+                                                   X, y, scoring='accuracy', cv=num_folds)
 print("Accuracy: " + str(round(100*accuracy_values.mean(), 2)) + "%")
 
-precision_values = cross_validation.cross_val_score(classifier, 
-        X, y, scoring='precision_weighted', cv=num_folds)
+precision_values = cross_validation.cross_val_score(classifier,
+                                                    X, y, scoring='precision_weighted', cv=num_folds)
 print("Precision: " + str(round(100*precision_values.mean(), 2)) + "%")
 
-recall_values = cross_validation.cross_val_score(classifier, 
-        X, y, scoring='recall_weighted', cv=num_folds)
+recall_values = cross_validation.cross_val_score(classifier,
+                                                 X, y, scoring='recall_weighted', cv=num_folds)
 print("Recall: " + str(round(100*recall_values.mean(), 2)) + "%")
 
-f1_values = cross_validation.cross_val_score(classifier, 
-        X, y, scoring='f1_weighted', cv=num_folds)
+f1_values = cross_validation.cross_val_score(classifier,
+                                             X, y, scoring='f1_weighted', cv=num_folds)
 print("F1: " + str(round(100*f1_values.mean(), 2)) + "%")
-

@@ -1,16 +1,18 @@
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
+
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 from sklearn.metrics import classification_report
-from sklearn import grid_search
+#from sklearn import grid_search
+from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-
 from utilities import visualize_classifier
 
 # Load input data
-input_file = '/home/bagusjava/Documents/0-Learn-More/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/data_random_forests.txt'
+input_file = '/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/data_random_forests.txt'
 data = np.loadtxt(input_file, delimiter=',')
 X, y = data[:, :-1], data[:, -1]
 
@@ -33,18 +35,22 @@ metrics = ['precision_weighted', 'recall_weighted']
 for metric in metrics:
     print("\n##### Searching optimal parameters for", metric)
 
-    classifier = grid_search.GridSearchCV(
+    classifier = GridSearchCV(
             ExtraTreesClassifier(random_state=0), 
             parameter_grid, cv=5, scoring=metric)
     classifier.fit(X_train, y_train)
 
-    print("\nGrid scores for the parameter grid:")
-    for params, avg_score, _ in classifier.grid_scores_:
-        print(params, '-->', round(avg_score, 3))
+#     print("\nGrid scores for the parameter grid:")
+#     for params, avg_score, _ in classifier.grid_scores_:
+#         print(params, '-->', round(avg_score, 3))
 
-    print("\nBest parameters:", classifier.best_params_)
+#     print("\nBest parameters:", classifier.best_params_)
 
-    y_pred = classifier.predict(X_test)
-    print("\nPerformance report:\n")
-    print(classification_report(y_test, y_pred))
+#     y_pred = classifier.predict(X_test)
+#     print("\nPerformance report:\n")
+#     print(classification_report(y_test, y_pred))
 
+df = pd.DataFrame(classifier.cv_results_)
+df_columns_to_print = [
+    column for column in df.columns if 'param' in column or 'score' in column]
+print(df[df_columns_to_print])

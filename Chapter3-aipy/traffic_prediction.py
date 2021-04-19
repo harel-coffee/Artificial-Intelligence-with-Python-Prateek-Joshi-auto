@@ -1,3 +1,5 @@
+# Copyright @ Bagus Java @ Dr. MUHAMMAD FAISAL,S.Kom., M.T @ Magister Informatika @ UIN Maulana Malik Ibrahim @ UIN Malang (https://www.bagusjava.com/)
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, mean_absolute_error
@@ -8,7 +10,7 @@ from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split
 
 # Load input data
-input_file = '/home/bagusjava/Documents/0-Learn-More/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/traffic_data.txt'
+input_file = '/home/bagusjava/Documents/Python/Artificial-Intelligence-with-Python-Prateek-Joshi/Chapter3-aipy/traffic_data.txt'
 data = []
 with open(input_file, 'r') as f:
     for line in f.readlines():
@@ -18,7 +20,7 @@ with open(input_file, 'r') as f:
 data = np.array(data)
 
 # Convert string data to numerical data
-label_encoder = [] 
+label_encoder = []
 X_encoded = np.empty(data.shape)
 for i, item in enumerate(data[0]):
     if item.isdigit():
@@ -30,9 +32,9 @@ for i, item in enumerate(data[0]):
 X = X_encoded[:, :-1].astype(int)
 y = X_encoded[:, -1].astype(int)
 
-# Split data into training and testing datasets 
+# Split data into training and testing datasets
 X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.25, random_state=5)
+    X, y, test_size=0.25, random_state=5)
 
 # Extremely Random Forests regressor
 params = {'n_estimators': 100, 'max_depth': 4, 'random_state': 0}
@@ -51,11 +53,12 @@ for i, item in enumerate(test_datapoint):
     if item.isdigit():
         test_datapoint_encoded[i] = int(test_datapoint[i])
     else:
-        test_datapoint_encoded[i] = int(label_encoder[count].transform(test_datapoint[i]))
-        count = count + 1 
+
+       # test_datapoint_encoded[i] = int(label_encoder[count].transform(test_datapoint[i]))
+        count = count + 1
 
 test_datapoint_encoded = np.array(test_datapoint_encoded)
 
 # Predict the output for the test datapoint
-print("Predicted traffic:", int(regressor.predict([test_datapoint_encoded])[0]))
-
+print("Predicted traffic:", int(
+    regressor.predict([test_datapoint_encoded])[0]))
